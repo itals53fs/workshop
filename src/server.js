@@ -14,7 +14,6 @@ app.post('/cadastrar', (req, res)=>{
 })
 
 
-
 app.listen(porta, function(){
     console.log(`Rodando na porta ${porta}`)
 })
