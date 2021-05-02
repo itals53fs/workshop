@@ -6,8 +6,10 @@ app.use(express.json({extends: true}));
 const fs = require('fs')
 
 app.get('/', (req, res)=>{
-    res.json({messege:'Tudo certo!'})
+    res.send({messege:'Tudo certo!'})
 })
+
+
 
 app.post('/cadastrar', (req, res)=>{
     const {nome, preco} = req.body;
@@ -16,6 +18,12 @@ app.post('/cadastrar', (req, res)=>{
     console.log(JSON.parse(produtos))
 
     res.send({nome, preco})
+})
+
+app.post('/enviar', (req, res)=>{
+    const {name, lastName} = req.body
+    console.log({name, lastName})
+    res.send()
 })
 
 
