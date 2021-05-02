@@ -40,21 +40,53 @@ app.get('/produtos/:id', (req,res)=>{
 })
 
 app.post('/cadastrar', (req, res)=>{
-    const {name, preco} = req.body;
+    const {nome, preco} = req.body;
     
     const id = Math.random().toString(32).substr(2, 9);
 
 
     const produtos = lerArquivos();
-    produtos.push({id, name, preco})
+    produtos.push({nome, preco, id})
 
     escreverArquivo(produtos);
    
-    res.send({name, preco});
+    res.send({nome, preco});
 })
 
+app.put('/alterar', (req, res)=>{
 
+    const {nome, preco, id} = req.body
+    const produto = lerArquivos()
 
+    const itemselecionado = produto.findIndex(element => element.id === id)
+
+    produto[itemselecionado] = {
+        nome,
+        preco,
+        id
+    }
+
+    escreverArquivo(produto)
+    res.send(produto)
+
+})
+
+app.delete('/deletar/:id', (req, res)=>{
+    const {id} = req.params
+    const produto = lerArquivos()
+
+    const itemselecionado = produto.findIndex(element =>element.id === id)
+
+    if(itemselecionado>-1){
+        produto.splice(itemselecionado,1)
+        escreverArquivo(produto)
+
+    }else{
+       return res.status(500).send({messege: "not foaud"}) 
+    }
+
+    res.send()
+})
 
 app.listen(porta, function(){
     console.log(`Rodando na porta ${porta}`)
